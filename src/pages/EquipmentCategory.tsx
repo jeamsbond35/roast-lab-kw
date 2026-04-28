@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
-import { useCatalog } from "@/data/catalog";
+import { useCatalog } from "@/lib/supabase/catalog";
+
+const { products, loading } = useCatalog();
 import { equipmentTypeLabel } from "@/lib/catalogStore";
 import { useEffect } from "react";
 
