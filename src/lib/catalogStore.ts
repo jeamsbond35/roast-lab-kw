@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase.ts";
+import { supabase } from "@/lib/supabase";
 
 export type Product = {
   id: string;
@@ -13,7 +13,6 @@ export type Product = {
   tag?: string;
   details?: string;
   qty?: number;
-
   coffeeType?: string;
   origin?: string;
   altitude?: string;
@@ -33,36 +32,28 @@ export type Roaster = {
 // 🔥 PRODUCTS
 export const fetchProducts = async (): Promise<Product[]> => {
   const { data, error } = await supabase.from("products").select("*");
-  if (error) return [];
-  return data || [];
-};
 
-export const fetchProduct = async (id: string): Promise<Product | null> => {
-  const { data } = await supabase
-    .from("products")
-    .select("*")
-    .eq("id", id)
-    .single();
+  if (error) {
+    console.error(error.message);
+    return [];
+  }
 
-  return data || null;
-};
-
-export const fetchProductsByRoaster = async (slug: string) => {
-  const { data } = await supabase
-    .from("products")
-    .select("*")
-    .eq("roasterSlug", slug);
-
-  return data || [];
+  return data ?? [];
 };
 
 // 🔥 ROASTERS
 export const fetchRoasters = async (): Promise<Roaster[]> => {
-  const { data } = await supabase.from("roasters").select("*");
-  return data || [];
+  const { data, error } = await supabase.from("roasters").select("*");
+
+  if (error) {
+    console.error(error.message);
+    return [];
+  }
+
+  return data ?? [];
 };
 
-// 🔥 REACT HOOK (REALTIME SIMPLE)
+// 🔥 HOOK
 export function useCatalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [roasters, setRoasters] = useState<Roaster[]>([]);
@@ -86,7 +77,17 @@ export function useCatalog() {
       .channel("catalog")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "products" },
+        { event: "INSERT", schema: "public", table: "products" },
+        () => load()
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "products" },
+        () => load()
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "products" },
         () => load()
       )
       .subscribe();
