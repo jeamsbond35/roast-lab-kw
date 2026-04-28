@@ -3,7 +3,9 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { CoffeeSidebar } from "@/components/CoffeeSidebar";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { useCatalog, getProductsByRoaster } from "@/data/catalog";
+import { useCatalog } from "@/lib/supabase/catalog";
+
+const { products, loading } = useCatalog();
 
 export default function Roasters() {
   const { roasters } = useCatalog();
