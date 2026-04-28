@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase/supabaseclient.ts";
+import { supabase } from "@/lib/supabase";
 
 export type Product = {
   id: string;
