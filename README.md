@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Brew Fans project
 
 TODO: Document your project here

@@ -68,6 +68,15 @@ export function addOrder(order: Order) {
     window.dispatchEvent(new Event("orders:changed"));
   }
   if (typeof window !== "undefined" && isSupabaseEnabled()) {
-    void pushOrderToSupabase(order, getProfile());
+    const fnUrl = (import.meta.env.VITE_SUPABASE_FUNCTION_URL as string | undefined)?.trim();
+    if (fnUrl) {
+      fetch(fnUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order, profile: getProfile() }),
+      }).catch((e) => console.warn("[supabase] function", e));
+    } else {
+      void pushOrderToSupabase(order, getProfile());
+    }
   }
 }

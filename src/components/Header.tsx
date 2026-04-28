@@ -25,10 +25,11 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-md">
-      <div className="flex h-16 items-center gap-4 px-4 md:px-8">
+      <div className="flex h-14 md:h-16 items-center gap-3 md:gap-4 px-4 md:px-8">
         <SidebarTrigger className="text-foreground" />
-        <Link to="/" className="font-display text-xl md:text-2xl text-primary tracking-tight">
-          Roast Lab <span className="text-accent">KW</span>
+        <Link to="/" className="flex items-center gap-2 font-display text-xl md:text-2xl text-primary tracking-tight">
+          <img src="/logo.png" alt="Brew Fans" className="h-10 w-10 md:h-14 md:w-14 object-cover rounded" />
+          <span className="hidden sm:inline truncate text-lg md:text-2xl">Brew Fans</span>
         </Link>
         <nav className="hidden md:flex items-center gap-7 mr-6 text-sm text-muted-foreground">
           <Link to="/#products" className="hover:text-primary transition-colors">المنتجات</Link>

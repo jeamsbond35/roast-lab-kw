@@ -18,8 +18,15 @@ export function Roasters() {
               to={`/roaster/${r.slug}`}
               className="group bg-card border border-border rounded-xl p-6 text-center hover:shadow-card hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="h-12 w-12 mx-auto mb-3 rounded-full bg-primary/5 flex items-center justify-center font-display text-primary text-lg group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
-                {r.name.charAt(0)}
+              <div className="h-20 w-20 mx-auto mb-3 rounded-xl bg-primary/5 flex items-center justify-center overflow-hidden group-hover:bg-accent transition-colors">
+                {r.logo ? (
+                  // show roaster logo if provided
+                  <img src={r.logo} alt={r.name} className="h-full w-full object-cover" />
+                ) : (
+                  <div className="flex items-center justify-center h-full w-full font-display text-primary text-xl">
+                    {r.name.charAt(0)}
+                  </div>
+                )}
               </div>
               <p className="font-display text-sm text-primary">{r.name}</p>
               <p className="text-xs text-muted-foreground mt-1">{r.origin}</p>
